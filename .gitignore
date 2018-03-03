@@ -1,6 +1,6 @@
 # Configuration
 zappa_settings.json
-local_settings.py
+local.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
