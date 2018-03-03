@@ -24,14 +24,6 @@ A simple REST API for handling and storing Slack events and slash commands.
 - Add the AWS address to your `ALLOWED_HOSTS`
 - `zappa update <stage>`
 
-That's basically it.
-
-## Creating a superuser
-
-echo "from django.contrib.auth.models import User; User.objects.filter(email='admin@example.com').delete(); User.objects.create_superuser('admin', 'admin@example.com', 'password')" | zappa invoke production --raw 
-
-
 ## Todo
 
 - More detailed instructions / examples
-- Refactor model
