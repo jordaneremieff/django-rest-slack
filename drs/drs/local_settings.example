@@ -1,0 +1,12 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'drs',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '5432',
+    }
+}
+
+ALLOWED_HOSTS = ['localhost']
