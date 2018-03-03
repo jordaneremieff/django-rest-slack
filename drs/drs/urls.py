@@ -1,8 +1,9 @@
-from django.contrib import admin
 from django.urls import path
-from django.conf.urls import include
+
+from .views import event_view, command_view
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include('slack.urls')),
+    path('events/', event_view),
+    path('commands/', command_view),
 ]

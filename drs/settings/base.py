@@ -4,13 +4,13 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-SECRET_KEY = 'i5d2bw=t%+@nfvz&(id=#eeqg&1xex_rw3%$*yu=)s=i!%@q&b'
+SECRET_KEY = '<SECRET_KEY>'
 
 
-DEBUG = True
+DEBUG = False
 
 
-ALLOWED_HOSTS = []
+SITE_ID = 1
 
 
 INSTALLED_APPS = [
@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'slack',
+    'drs'
 ]
 
 
@@ -37,7 +37,7 @@ MIDDLEWARE = [
 ]
 
 
-ROOT_URLCONF = 'drs.urls'
+ROOT_URLCONF = 'settings.urls'
 
 
 TEMPLATES = [
@@ -57,7 +57,7 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'drs.wsgi.application'
+WSGI_APPLICATION = 'settings.wsgi.application'
 
 
 DATABASES = {
@@ -114,15 +114,10 @@ SLACK_VERIFICATION_TOKEN = os.environ.get('SLACK_VERIFICATION_TOKEN')
 SLACK_BOT_USER_TOKEN = os.environ.get('SLACK_BOT_USER_TOKEN')
 
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = []
 
 
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
 }
 
-
-try:
-    from .local_settings import *
-except ImportError:
-    pass
