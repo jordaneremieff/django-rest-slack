@@ -14,9 +14,6 @@ class SlackAuthentication(BaseAuthentication):
         msg_data = request.data
         if msg_data.get('token') != settings.SLACK_VERIFICATION_TOKEN:
             raise exceptions.AuthenticationFailed('Incorrect auth token.')   
-        if msg_data.get('type') == 'url_verification':
-            challenge = msg_data.get('challenge')       
-            return Response(data=challenge, status=status.HTTP_200_OK)
 
 
 class DRSEventView(APIView):
@@ -24,6 +21,9 @@ class DRSEventView(APIView):
     authentication_classes = [SlackAuthentication]
 
     def post(self, request, *args, **kwargs):
+        if request.data.get('type') == 'url_verification':
+            challenge = request.data.get('challenge')       
+            return Response(data=challenge, status=status.HTTP_200_OK)
         event = request.data.get('event')
         if event and not event.get('subtype') == 'bot_message':
             event_type = event['type']

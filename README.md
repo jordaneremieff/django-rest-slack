@@ -11,7 +11,7 @@ A simple, reusable Django app for handling and storing Slack events and slash co
 
 ## Setup
 
-- `pip install django django-rest-framework django-rest-slack`
+- `pip install django django-rest-framework django-rest-slack psycopg2-binary`
 
 - Include the following to your settings.py:
 
@@ -25,7 +25,9 @@ A simple, reusable Django app for handling and storing Slack events and slash co
 - Include the following to your urls.py:
 
 ```
+    from django.conf.urls import include
     from rest_slack.views import DRSEventView, DRSCommandView
+
 
     api_patterns = ([
             path('events/', DRSEventView.as_view()),
