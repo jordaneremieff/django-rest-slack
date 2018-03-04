@@ -1,12 +1,11 @@
-from django.conf import settings
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authentication import BaseAuthentication
 from rest_framework import exceptions
 
-from . import functions
+from rest_slack.utils import get_slack_function
+from rest_slack import app_settings as settings
 
 
 class SlackAuthentication(BaseAuthentication):
@@ -20,7 +19,7 @@ class SlackAuthentication(BaseAuthentication):
             return Response(data=challenge, status=status.HTTP_200_OK)
 
 
-class Event(APIView):
+class DRSEventView(APIView):
 
     authentication_classes = [SlackAuthentication]
 
@@ -28,28 +27,20 @@ class Event(APIView):
         event = request.data.get('event')
         if event and not event.get('subtype') == 'bot_message':
             event_type = event['type']
-            func = getattr(functions, event_type, None)
+            func = get_slack_function(event_type)
             if func:
                 func(request.data)
         return Response(status=status.HTTP_200_OK)
 
-event_view = Event.as_view()
 
-
-class Command(APIView):
+class DRSCommandView(APIView):
 
     authentication_classes = [SlackAuthentication]
 
     def post(self, request, *args, **kwargs):
         command = request.data['command'].replace('/', '')
-        func = getattr(functions, command, None)
+        func = get_slack_function(command)
         if not func:
-            data = {
-                "response_type": "ephemeral",
-                "text": "That command doesn't exist."
-            }
-            return Response(data, status=status.HTTP_200_OK)
+            return Response(status=status.HTTP_404_NOT_FOUND)
         res = func(request.data)
         return Response(res, status=status.HTTP_200_OK)
-
-command_view = Command.as_view()

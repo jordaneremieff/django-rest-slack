@@ -1,0 +1,4 @@
+-e ../
+django
+psycopg2-binary
+django-rest-framework
